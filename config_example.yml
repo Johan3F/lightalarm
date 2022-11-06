@@ -1,0 +1,10 @@
+time: "06:15"
+fade_in_minutes: 20
+days:
+  - Monday
+  - Tuesday
+  - Wednesday
+  - Thursday
+  - Friday
+
+last_for_minutes_after_alarm: 15
