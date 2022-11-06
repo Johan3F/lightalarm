@@ -4,8 +4,8 @@ import logging
 import datetime
 from dateutil.rrule import *
 
+import hjson
 import argparse
-import yaml
 import board
 import neopixel
 
@@ -23,7 +23,7 @@ def setup_arguments():
 
 def parse_config(path):
     with open(path) as file:
-        alarm_config = yaml.safe_load(file)
+        alarm_config = hjson.loads(file.read())
         return alarm_config
 
 def turn_off_led(led_strip):
@@ -31,8 +31,7 @@ def turn_off_led(led_strip):
 
 def initialize_led():
     led_strip = neopixel.NeoPixel(PIN, LED_AMOUNT, pixel_order=PIXEL_ORDER, auto_write=True, brightness=0)
-    for led in range(LED_AMOUNT):
-        led_strip[led] = YELLOW
+    led_strip.fill(YELLOW)
     turn_off_led(led_strip)
     return led_strip
 
