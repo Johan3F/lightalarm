@@ -9,6 +9,7 @@ import argparse
 import board
 import neopixel
 
+FPS = 2
 LED_AMOUNT = 40
 PIN = board.D18
 PIXEL_ORDER = neopixel.RGB
@@ -53,7 +54,7 @@ def day_string_to_number(day_str):
     return DAYS[day_str.lower()]
 
 async def ring_alarm(led_strip, minutes_to_run, last_for_minutes_after_alarm):
-    steps = (minutes_to_run*60)*24
+    steps = (minutes_to_run*60)*FPS
     step_time = (minutes_to_run/steps)*60 # Seconds
     brightness_step_size = 1/steps
     start = datetime.datetime.now()
