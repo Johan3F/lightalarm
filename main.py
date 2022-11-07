@@ -13,7 +13,8 @@ FPS = 2
 LED_AMOUNT = 40
 PIN = board.D18
 PIXEL_ORDER = neopixel.RGB
-YELLOW = (10, 255 , 110) # With RGB mode, Neopixel works as BRG
+# YELLOW = (10, 255 , 110) # With RGB mode, Neopixel works as BRG
+YELLOW = (5, 255 , 60) # With RGB mode, Neopixel works as BRG
 
 
 def setup_arguments():
@@ -31,7 +32,7 @@ def turn_off_led(led_strip):
     led_strip.brightness = 0
 
 def initialize_led():
-    led_strip = neopixel.NeoPixel(PIN, LED_AMOUNT, pixel_order=PIXEL_ORDER, auto_write=True, brightness=0)
+    led_strip = neopixel.NeoPixel(PIN, LED_AMOUNT, pixel_order=PIXEL_ORDER, auto_write=True, brightness=1)
     led_strip.fill(YELLOW)
     turn_off_led(led_strip)
     return led_strip

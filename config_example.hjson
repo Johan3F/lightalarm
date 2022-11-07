@@ -1,6 +1,6 @@
 {
-  "time": "06:15",
-  "fade_in_minutes": 20,
+  "time": "06:27",
+  "fade_in_minutes": 30,
   "days": [
     "Monday",
     "Tuesday",
@@ -8,5 +8,5 @@
     "Thursday",
     "Friday"
   ],
-  "last_for_minutes_after_alarm": 15
+  "last_for_minutes_after_alarm": 1
 }
