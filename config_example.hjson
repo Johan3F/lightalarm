@@ -8,5 +8,6 @@
     "Thursday",
     "Friday"
   ],
-  "last_for_minutes_after_alarm": 1
+  "last_for_minutes_after_alarm": 1,
+  "log_path": "/home/pi/lightalarm/logs/log.log"
 }

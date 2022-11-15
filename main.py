@@ -1,6 +1,7 @@
 import time
 import asyncio
 import logging
+import logging.handlers
 import datetime
 from dateutil.rrule import *
 
@@ -86,12 +87,23 @@ async def setup_alarms(led_stripe, alarm_config):
     await run_at(alarm, ring_alarm(led_stripe, alarm_config['fade_in_minutes'], alarm_config['last_for_minutes_after_alarm']))
 
 
+def log_setup(log_path: str):
+    formatter = logging.Formatter('%(asctime)s - %(levelname)7s: %(message)s', "%Y-%m-%d %H:%M:%S")
+
+    file_log_handler = logging.handlers.RotatingFileHandler(log_path, maxBytes=2000, backupCount=5)
+    file_log_handler.setFormatter(formatter)
+    
+    logger = logging.getLogger()
+    logger.addHandler(file_log_handler)
+    logger.setLevel(logging.DEBUG)
+
 async def main():
-    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
     args = setup_arguments()
     led_stripe = initialize_led()
 
     alarm_config = parse_config(args.config_file)
+    log_setup(alarm_config['log_path'])
+
     logging.debug(f"Running with configuration: {alarm_config}")
     while True:
         await setup_alarms(led_stripe, alarm_config)
