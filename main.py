@@ -16,6 +16,7 @@ PIN = board.D18
 PIXEL_ORDER = neopixel.RGB
 # YELLOW = (10, 255 , 110) # With RGB mode, Neopixel works as BRG
 YELLOW = (5, 255 , 60) # With RGB mode, Neopixel works as BRG
+MEGABYTE = 1000000 # bytes
 
 
 def setup_arguments():
@@ -87,22 +88,23 @@ async def setup_alarms(led_stripe, alarm_config):
     await run_at(alarm, ring_alarm(led_stripe, alarm_config['fade_in_minutes'], alarm_config['last_for_minutes_after_alarm']))
 
 
-def log_setup(log_path: str):
+def log_setup(log_path: str, log_level: str):
     formatter = logging.Formatter('%(asctime)s - %(levelname)7s: %(message)s', "%Y-%m-%d %H:%M:%S")
 
-    file_log_handler = logging.handlers.RotatingFileHandler(log_path, maxBytes=2000, backupCount=5)
+    file_log_handler = logging.handlers.RotatingFileHandler(log_path, maxBytes=20 * MEGABYTE, backupCount=5)
     file_log_handler.setFormatter(formatter)
     
     logger = logging.getLogger()
     logger.addHandler(file_log_handler)
-    logger.setLevel(logging.DEBUG)
+
+    logger.setLevel(logging.getLevelName(log_level.upper()))
 
 async def main():
     args = setup_arguments()
     led_stripe = initialize_led()
 
     alarm_config = parse_config(args.config_file)
-    log_setup(alarm_config['log_path'])
+    log_setup(alarm_config['log_path'], alarm_config['log_level'])
 
     logging.debug(f"Running with configuration: {alarm_config}")
     while True:
